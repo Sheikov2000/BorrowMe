@@ -2,7 +2,7 @@
 
 namespace BorrowMe.Models
 {
-    public class Items
+    public class Item
     {
         public int Id { get; set; }
         public int UserId { get; set; }

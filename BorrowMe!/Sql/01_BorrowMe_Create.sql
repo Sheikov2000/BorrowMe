@@ -28,7 +28,7 @@ CREATE TABLE [Borrowing] (
 )
 GO
 
-CREATE TABLE [Items] (
+CREATE TABLE [Item] (
   [Id] int PRIMARY KEY IDENTITY(1, 1),
   [UserId] int,
   [Name] nvarchar(255) NOT NULL,
