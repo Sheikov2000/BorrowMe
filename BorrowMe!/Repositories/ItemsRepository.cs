@@ -1,6 +1,8 @@
 ﻿namespace BorrowMe.Repositories
 {
-    public class Items
+    public class ItemsRepository
     {
+
+
     }
 }
