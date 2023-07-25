@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using BorrowMe.Repositories;
 
 namespace BorrowMe
 {
@@ -29,7 +30,7 @@ namespace BorrowMe
         {
             //services.AddTransient<IMessagesRepository, MessagesRepository>();
             //services.AddTransient<IItemsRepository, ItemsRepository>();
-            //services.AddTransient<IUsersRepository, UsersRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             //services.AddTransient<IBorrowingRepository, BorrowingRepository>();
             //services.AddTransient<IItemTypeRepository, ItemTypeRepository>();
 
