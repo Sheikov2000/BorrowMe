@@ -9,10 +9,10 @@ namespace BorrowMe.Models
 
         [Required]
         public int SenderId { get; set; }
-        public Users Sender { get; set; }
+        public User Sender { get; set; }
         [Required]
         public int RecipientId { get; set; }
-        public Users Recipient { get; set; }
+        public User Recipient { get; set; }
 
         [Required]
         [MaxLength (250)]
