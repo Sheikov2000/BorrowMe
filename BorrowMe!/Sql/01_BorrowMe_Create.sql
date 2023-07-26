@@ -1,4 +1,4 @@
-CREATE TABLE [Users] (
+﻿CREATE TABLE [User] (
   [Id] int PRIMARY KEY IDENTITY(1, 1),
   [FirebaseId] nvarchar(255) NOT NULL,
   [FirstName] nvarchar(255) NOT NULL,
@@ -45,25 +45,21 @@ CREATE TABLE [ItemType] (
 GO
 
 
-ALTER TABLE [Messages] ADD FOREIGN KEY ([SenderId]) REFERENCES [Users] ([Id])
+ALTER TABLE [Messages] ADD FOREIGN KEY ([SenderId]) REFERENCES [User] ([Id])
 GO
 
-ALTER TABLE [Messages] ADD FOREIGN KEY ([RecipientId]) REFERENCES [Users] ([Id])
+ALTER TABLE [Messages] ADD FOREIGN KEY ([RecipientId]) REFERENCES [User] ([Id])
 GO
 
-ALTER TABLE [Items] ADD FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+ALTER TABLE [Item] ADD FOREIGN KEY ([UserId]) REFERENCES [User] ([Id]) ON DELETE CASCADE
 GO
 
-ALTER TABLE [Borrowing] ADD FOREIGN KEY ([ItemId]) REFERENCES [Items] ([Id]) ON DELETE CASCADE
+ALTER TABLE [Borrowing] ADD FOREIGN KEY ([ItemId]) REFERENCES [Item] ([Id]) ON DELETE CASCADE
 GO
 
-ALTER TABLE [Borrowing] ADD FOREIGN KEY ([BorrowerId]) REFERENCES [Users] ([Id])
+ALTER TABLE [Borrowing] ADD FOREIGN KEY ([BorrowerId]) REFERENCES [User] ([Id])
 GO
 
-ALTER TABLE [Items] ADD FOREIGN KEY ([ItemTypeId]) REFERENCES  [ItemType] ([Id])
+ALTER TABLE [Item] ADD FOREIGN KEY ([ItemTypeId]) REFERENCES  [ItemType] ([Id])
 GO
 
-INSERT INTO  Users (FirstName, LastName, FirebaseId, Email, Phone, ZipCode) VALUES
-    ('Nick', 'Nickson', 'faA3HakUjPXBMgQpRH6z0DxYWT03', 'nick@nick.org', '123-456-7890', '12345'),
-    ('Michael', 'Johnson', 'odc13SBtfQUOhB8Re2PIDLbcs9g1', 'admin@admin.com', '555-555-5555', '67890')
-   
