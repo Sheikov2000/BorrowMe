@@ -87,9 +87,6 @@ namespace BorrowMe.Repositories
 
         }
 
-
-
-
         public void AddUser(User user)
         {
             using (var conn = Connection)
