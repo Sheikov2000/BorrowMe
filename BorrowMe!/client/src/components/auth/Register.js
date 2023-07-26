@@ -8,9 +8,9 @@ export default function Register() {
 
     const [firstName, setFirstName] = useState();
     const [lastName, setLastName] = useState();
-    const [displayName, setDisplayName] = useState();
     const [email, setEmail] = useState();
-    const [imageLocation, setImageLocation] = useState();
+    const [phone, setPhone] = useState();
+    const [zipCode, setZipCode] = useState();
     const [password, setPassword] = useState();
     const [confirmPassword, setConfirmPassword] = useState();
 
@@ -22,9 +22,9 @@ export default function Register() {
             const userProfile = {
                 firstName,
                 lastName,
-                displayName,
-                imageLocation,
                 email,
+                phone,
+                zipCode
             };
             register(userProfile, password).then(() => navigate("/"));
         }
@@ -50,14 +50,6 @@ export default function Register() {
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label htmlFor="displayName">Display Name</Label>
-                    <Input
-                        id="displayName"
-                        type="text"
-                        onChange={(e) => setDisplayName(e.target.value)}
-                    />
-                </FormGroup>
-                <FormGroup>
                     <Label for="email">Email</Label>
                     <Input
                         id="email"
@@ -66,11 +58,19 @@ export default function Register() {
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label htmlFor="imageLocation">Profile Image URL</Label>
+                    <Label for="phone">Phone</Label>
                     <Input
-                        id="imageLocation"
-                        type="text"
-                        onChange={(e) => setImageLocation(e.target.value)}
+                        id="phone"
+                        type="numbers"
+                        onChange={(e) => setPhone(e.target.value)}
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="zipCode">Zip Code</Label>
+                    <Input
+                        id="zipCode"
+                        type="numbers"
+                        onChange={(e) => setZipCode(e.target.value)}
                     />
                 </FormGroup>
                 <FormGroup>
