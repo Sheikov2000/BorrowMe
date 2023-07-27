@@ -10,7 +10,7 @@ namespace BorrowMe.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -19,10 +19,10 @@ namespace BorrowMe.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet("{firebaseUserId}")]
-        public IActionResult GetByFirebaseUserId(string firebaseUserId)
+        [HttpGet("{firebaseId}")]
+        public IActionResult GetByFirebaseUserId(string firebaseId)
         {
-            var user = _userRepository.GetByFirebaseUserId(firebaseUserId);
+            var user = _userRepository.GetByFirebaseUserId(firebaseId);
             if (user == null)
             {
                 return NotFound();
@@ -30,10 +30,10 @@ namespace BorrowMe.Controllers
             return Ok(user);
         }
         
-        [HttpGet("DoesUserExist/{firebaseUserId}")]
-        public IActionResult DoesUserExist(string firebaseUserId)
+        [HttpGet("DoesUserExist/{firebaseId}")]
+        public IActionResult DoesUserExist(string firebaseId)
         {
-            var user = _userRepository.GetByFirebaseUserId(firebaseUserId);
+            var user = _userRepository.GetByFirebaseUserId(firebaseId);
 
             if (user == null)
             {
@@ -61,7 +61,7 @@ namespace BorrowMe.Controllers
         {
             _userRepository.AddUser(user);
             return CreatedAtAction(
-                nameof(GetByFirebaseUserId), new { firebaseUserId = user.FirebaseUserId }, user);
+                nameof(GetByFirebaseUserId), new { firebaseId = user.FirebaseId }, user);
         }
 
         private User GetCurrentUserProfile()
