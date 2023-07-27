@@ -18,8 +18,8 @@ namespace BorrowMe.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, FirebaseId, FirstName, LastName, Email, ZipCode   
-                        FROM User
+                        SELECT Id, FirebaseId, FirstName, LastName, Email, Phone, ZipCode   
+                        FROM [User]
                         WHERE FirebaseId = @FirebaseId";
 
                     DbUtils.AddParameter(cmd, "@FirebaseId", firebaseId);

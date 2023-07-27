@@ -5,7 +5,7 @@ namespace BorrowMe.Utils
 {
     public static class DbUtils
     {
-        
+
         /// <summary>
         ///  Get a string from a data reader object and gracefully handle NULL values
         /// </summary>
