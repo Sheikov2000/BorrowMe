@@ -11,7 +11,7 @@ namespace BorrowMe.Models
         public int Id { get; set; }
 
         [StringLength(28, MinimumLength = 28)]
-        public string FirebaseUserId { get; set; }
+        public string FirebaseId { get; set; }
 
         [Required]
         [MaxLength(20)]
@@ -32,7 +32,7 @@ namespace BorrowMe.Models
 
         [Required]
         [StringLength(5, MinimumLength = 5)]
-        public string ZipCode { get; set; }
+        public int ZipCode { get; set; }
 
     }
 }

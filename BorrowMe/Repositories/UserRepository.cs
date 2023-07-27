@@ -10,7 +10,7 @@ namespace BorrowMe.Repositories
     {
         public UserRepository(IConfiguration configuration) : base(configuration) { }
 
-        public User GetByFirebaseUserId(string firebaseUserId)
+        public User GetByFirebaseUserId(string firebaseId)
         {
             using (var conn = Connection)
             {
@@ -18,11 +18,11 @@ namespace BorrowMe.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, FirebaseUserId, FirstName, LastName, Email, ZipCode   
+                        SELECT Id, FirebaseId, FirstName, LastName, Email, ZipCode   
                         FROM User
-                        WHERE FirebaseUserId = @FirebaseuserId";
+                        WHERE FirebaseId = @FirebaseId";
 
-                    DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseUserId);
+                    DbUtils.AddParameter(cmd, "@FirebaseId", firebaseId);
 
                     User user = null;
 
@@ -32,12 +32,12 @@ namespace BorrowMe.Repositories
                         user = new User()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
-                            FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
+                            FirebaseId = DbUtils.GetString(reader, "FirebaseId"),
                             FirstName = DbUtils.GetString(reader, "FirstName"),
                             LastName = DbUtils.GetString(reader, "LastName"),
                             Email = DbUtils.GetString(reader, "Email"),
                             Phone = DbUtils.GetString(reader, "Phone"),
-                            ZipCode = DbUtils.GetString(reader, "ZipCode")
+                            ZipCode = DbUtils.GetInt(reader, "ZipCode")
                         };
                     }
                     reader.Close();
@@ -56,9 +56,9 @@ namespace BorrowMe.Repositories
                 {
 
                     cmd.CommandText = @"
-                        SELECT Id, FirebaseUserId, FirstName, LastName, Email, Phone, ZipCode         
-                        FROM User
-                        WHERE up.Id = @id";
+                        SELECT Id, FirebaseId, FirstName, LastName, Email, Phone, ZipCode         
+                        FROM [User]
+                        WHERE Id = @id";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
 
@@ -71,12 +71,12 @@ namespace BorrowMe.Repositories
                         user = new User()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
-                            FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
+                            FirebaseId = DbUtils.GetString(reader, "FirebaseId"),
                             FirstName = DbUtils.GetString(reader, "FirstName"),
                             LastName = DbUtils.GetString(reader, "LastName"),
                             Email = DbUtils.GetString(reader, "Email"),
                             Phone = DbUtils.GetString(reader, "Phone"),
-                            ZipCode = DbUtils.GetString(reader, "ZipCode")
+                            ZipCode = DbUtils.GetInt(reader, "ZipCode")
                         };
                     }
                     reader.Close();
@@ -94,11 +94,11 @@ namespace BorrowMe.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO User (FirebaseUserId, FirstName, LastName, Email, Phone, ZipCode)
+                    cmd.CommandText = @"INSERT INTO User (FirebaseId, FirstName, LastName, Email, Phone, ZipCode)
                                         OUTPUT INSERTED.ID
                                         VALUES (@FirebaseUserId, @FirstName, @LastName, 
                                                 @Email, @Phone, @ZipCode)";
-                    DbUtils.AddParameter(cmd, "@FirebaseUserId", user.FirebaseUserId);
+                    DbUtils.AddParameter(cmd, "@FirebaseId", user.FirebaseId);
                     DbUtils.AddParameter(cmd, "@FirstName", user.FirstName);
                     DbUtils.AddParameter(cmd, "@LastName", user.LastName);
                     DbUtils.AddParameter(cmd, "@Email", user.Email);
