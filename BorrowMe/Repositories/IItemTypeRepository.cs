@@ -1,9 +1,9 @@
-﻿namespace BorrowMe.Repositories
-{
-    public interface IItemTypeRepository
-    {
+﻿//namespace BorrowMe.Repositories
+//{
+//    public interface IItemTypeRepository
+//    {
 
 
 
-    }
-}
+//    }
+//}
