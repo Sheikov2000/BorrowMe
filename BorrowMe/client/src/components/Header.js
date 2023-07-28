@@ -18,7 +18,7 @@ export default function Header({ isLoggedIn, role }) {
     return (
         <div>
             <Navbar color="light" light expand="md">
-                <NavbarBrand tag={RRNavLink} to="/">Tabloid</NavbarBrand>
+                <NavbarBrand tag={RRNavLink} to="/">BorrowMe</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
@@ -36,7 +36,7 @@ export default function Header({ isLoggedIn, role }) {
                                 </NavItem>
                             </>
                         }
-                        {role === "Admin" &&
+                        {/* {role === "Admin" &&
                             <>
                                 <NavItem>
                                     <NavLink tag={RRNavLink} to="/categories">Categories</NavLink>
@@ -48,7 +48,7 @@ export default function Header({ isLoggedIn, role }) {
                                     <NavLink tag={RRNavLink} to="/users">Users</NavLink>
                                 </NavItem>
                             </>
-                        }
+                        } */}
                         {isLoggedIn &&
                             <>
                                 <NavItem>
