@@ -19,7 +19,6 @@ namespace BorrowMe.Models
         
         [Required]
         public int ItemTypeId { get; set; }
-        public ItemType ItemType { get; set; }
         public string ImageUrl { get; set; }
 
 
