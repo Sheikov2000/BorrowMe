@@ -96,7 +96,7 @@ namespace BorrowMe.Repositories
                 {
                     cmd.CommandText = @"INSERT INTO User (FirebaseId, FirstName, LastName, Email, Phone, ZipCode)
                                         OUTPUT INSERTED.ID
-                                        VALUES (@FirebaseUserId, @FirstName, @LastName, 
+                                        VALUES (@FirebaseId, @FirstName, @LastName, 
                                                 @Email, @Phone, @ZipCode)";
                     DbUtils.AddParameter(cmd, "@FirebaseId", user.FirebaseId);
                     DbUtils.AddParameter(cmd, "@FirstName", user.FirstName);
@@ -130,27 +130,12 @@ namespace BorrowMe.Repositories
                     DbUtils.AddParameter(cmd, "@LastName", user.LastName);
                     DbUtils.AddParameter(cmd, "@Email", user.Email);
                     DbUtils.AddParameter(cmd, "@Phone", user.Phone);
-                    DbUtils.AddParameter(cmd, "@Zipcode", user.ZipCode);
+                    DbUtils.AddParameter(cmd, "@ZipCode", user.ZipCode);
 
 
                     cmd.ExecuteNonQuery();
                 }
             }
         }
-
-        /*
-        public UserProfile GetByFirebaseUserId(string firebaseUserId)
-        {
-            return _context.UserProfile
-                       .Include(up => up.UserType) 
-                       .FirstOrDefault(up => up.FirebaseUserId == firebaseUserId);
-        }
-
-        public void Add(UserProfile userProfile)
-        {
-            _context.Add(userProfile);
-            _context.SaveChanges();
-        }
-        */
     }
 }
