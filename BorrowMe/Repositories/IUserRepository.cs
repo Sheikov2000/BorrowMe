@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using BorrowMe.Models;
 
-
-
 namespace BorrowMe.Repositories
 {
     public interface IUserRepository
