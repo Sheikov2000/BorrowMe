@@ -1,28 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { Spinner } from 'reactstrap';
-import Header from "./components/Header";
-import ApplicationViews from "./components/ApplicationViews";
-import { onLoginStatusChange } from "./modules/authManager";
-import { me } from "./modules/authManager"
+import { Spinner } from "reactstrap";
+import { onLoginStatusChange, getUserDetails } from "./modules/authManager";
+import firebase from "firebase";
+import Header from "./components/user/Header";
+import ApplicationViews from "./components/user/ApplicationViews";
+
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
-  const [userProfile, setUserProfile] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(null),
+    [role, setRole] = useState("");
 
   useEffect(() => {
     onLoginStatusChange(setIsLoggedIn);
   }, []);
 
-
   useEffect(() => {
     if (isLoggedIn) {
-      me().then(setUserProfile);
+      // firebase.auth().currentUser.uid grabs the firebaseUID -- firebase has many helpers like this
+      getUserDetails(firebase.auth().currentUser.uid).then((userObject) => {
+        setRole(userObject.userType.name);
+      });
     } else {
-      setUserProfile(null);
+      setRole("");
     }
   }, [isLoggedIn]);
-
 
   if (isLoggedIn === null) {
     return <Spinner className="app-spinner dark" />;
@@ -30,34 +32,10 @@ function App() {
 
   return (
     <Router>
-      <Header isLoggedIn={isLoggedIn} profile={userProfile} />
-      <ApplicationViews isLoggedIn={isLoggedIn} profile={userProfile} />
+      <Header isLoggedIn={isLoggedIn} role={role} />
+      <ApplicationViews isLoggedIn={isLoggedIn} role={role} />
     </Router>
   );
 }
 
-
 export default App;
-
-// import React, { useEffect, useState } from "react";
-// import { BrowserRouter as Router } from "react-router-dom";
-// import { Spinner } from "reactstrap";
-// import { getUserDetails, onLoginStatusChange } from "./authManager";
-
-// import ApplicationViews from "./components/ApplicationViews";
-// function App() {
-//   const [isLoggedIn, setIsLoggedIn] = useState(null);
-//   useEffect(() => {
-//     onLoginStatusChange(setIsLoggedIn);
-//   }, []);
-//   if (isLoggedIn === null) {
-//     return <Spinner className="app-spinner dark" />;
-//   }
-//   return (
-//     <Router>
-//       {/* <Header isLoggedIn={isLoggedIn} /> */}
-//       <ApplicationViews isLoggedIn={isLoggedIn} />
-//     </Router>
-//   );
-// }
-// export default App;
