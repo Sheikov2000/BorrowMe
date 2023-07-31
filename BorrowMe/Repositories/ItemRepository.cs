@@ -12,23 +12,26 @@ namespace BorrowMe.Repositories
     {
         public ItemRepository(IConfiguration configuration) : base(configuration) { }
 
- 
-        //public void GetById(int id) 
-        //{
-        //    using (var conn = Connection)
-        //    {
-        //        conn.Open();
-        //        using (var cmd = conn.CreateCommand()) 
-        //        {
-        //            cmd.CommandText = @"
-        //            SELECT i.Id as ItemId, i.Name, i.Description, i.UserId, i.ItemType, i.ImageUrl
+
+        public void GetById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    SELECT i.Id, i.Name, i.Description, i.UserId, i.ItemType, i.ImageUrl,
                     
-        //            u.FirstName, u.LastName,         
-        //                ";
-        //        }
-        //    }
-        //}
-        
+                    u.FirstName, u.LastName, u.email, u.Phone, u.Zipcode,
+                    
+                FROM Item i
+                JOIN User u ON i.UserId = u.Id
+                WHERE i.Id = @Id";
+                }
+            }
+        }
+
         public void AddItem(Item item) 
         {
             using (var conn = Connection)

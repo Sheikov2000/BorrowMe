@@ -5,6 +5,6 @@ namespace BorrowMe.Repositories
 {
     public interface IItemTypeRepository
     {
-        List<ItemType> GetAll();
+        List<Accessory> GetAll();
     }
 }

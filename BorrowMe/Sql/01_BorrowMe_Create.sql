@@ -1,4 +1,4 @@
-﻿CREATE TABLE [User] (
+CREATE TABLE [User] (
   [Id] int PRIMARY KEY IDENTITY(1, 1),
   [FirebaseId] nvarchar(255) NOT NULL,
   [FirstName] nvarchar(255) NOT NULL,
@@ -33,17 +33,17 @@ CREATE TABLE [Item] (
   [UserId] int,
   [Name] nvarchar(255) NOT NULL,
   [Description] nvarchar(255) NOT NULL,
-  [ItemTypeId] int NOT NULL,
   [ImageUrl] nvarchar(255)
 )
 GO
 
-CREATE TABLE [ItemType] (
+CREATE TABLE [Accessory] (
   [id] int PRIMARY KEY IDENTITY(1, 1),
-  [Name] nvarchar(255) NOT NULL
+  [Name] nvarchar(255) NOT NULL,
+  [ItemId] int NOT NULL,
+  [Note] nvarchar(255)
 )
 GO
-
 
 ALTER TABLE [Messages] ADD FOREIGN KEY ([SenderId]) REFERENCES [User] ([Id])
 GO
@@ -60,6 +60,5 @@ GO
 ALTER TABLE [Borrowing] ADD FOREIGN KEY ([BorrowerId]) REFERENCES [User] ([Id])
 GO
 
-ALTER TABLE [Item] ADD FOREIGN KEY ([ItemTypeId]) REFERENCES  [ItemType] ([Id])
+ALTER TABLE [Accessory] ADD FOREIGN KEY ([ItemId]) REFERENCES [Item] ([Id])
 GO
-
