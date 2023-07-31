@@ -13,7 +13,7 @@ namespace BorrowMe.Repositories
         public ItemRepository(IConfiguration configuration) : base(configuration) { }
 
 
-        public void GetById(int id)
+        public Item GetById(int id)
         {
             using (var conn = Connection)
             {
@@ -21,16 +21,49 @@ namespace BorrowMe.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    SELECT i.Id, i.Name, i.Description, i.UserId, i.ItemType, i.ImageUrl,
-                    
-                    u.FirstName, u.LastName, u.email, u.Phone, u.Zipcode,
-                    
-                FROM Item i
-                JOIN User u ON i.UserId = u.Id
-                WHERE i.Id = @Id";
+                            SELECT i.Id AS ItemId, i.UserId, i.Name, i.Description, i.ImageURL AS ItemImageLocation,
+                                   u.FirstName, u.LastName, u.Email, u.Phone, u.ZipCode, 
+                                   a.Id AS AccessoryId, a.Name AS AccessoryName, a.Note AS AccessoryNote
+                              FROM Item i
+                         LEFT JOIN User u ON u.Id = i.UserId
+                         LEFT JOIN Accessory a ON a.ItemId = i.Id
+                             WHERE i.Id = @id";
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+                    var reader = cmd.ExecuteReader();
+
+                    Item item = null;
+
+                    while (reader.Read())
+                    {
+                        var gearId = DbUtils.GetInt(reader, "GearId");
+
+                        if (item == null)
+                        {
+                            item = ItemFromDb(reader);
+                            item.Accessory = new List<Accessory>();
+                        }
+
+                        if (DbUtils.IsNotDbNull(reader, "AccessoryId"))
+                        {
+                            item.Accessories.Add(new Accessory()
+                            {
+                                Id = DbUtils.GetInt(reader, "AccessoryId"),
+                                Name = DbUtils.GetString(reader, "AccessoryName"),
+                                Description = DbUtils.GetString(reader, "AccessoryDescription"),
+                                GearId = gear.Id
+                            });
+                        }
+                    }
+
+       
+
+                    reader.Close();
+                    return item;
                 }
             }
         }
+
 
         public void AddItem(Item item) 
         {
