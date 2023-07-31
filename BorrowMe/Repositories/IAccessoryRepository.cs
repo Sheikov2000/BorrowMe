@@ -6,12 +6,9 @@ namespace BorrowMe.Repositories
 {
     public interface IAccessoryRepository
     {
-     
-        Item GetById(int id);
-
-        void Add(Item item);
-        void Update(Item item);
-        void Delete(int id);
+        Accessory GetById(int id);
+        void Add(Accessory accessory);
+        void Update(Accessory accessory);
 
     }
 }
