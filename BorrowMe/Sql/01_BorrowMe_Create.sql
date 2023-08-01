@@ -21,10 +21,7 @@ GO
 CREATE TABLE [Borrowing] (
   [Id] int PRIMARY KEY IDENTITY(1, 1),
   [BorrowerId] int NOT NULL,
-  [ItemId] int NOT NULL,
-  [TakeDate] datetime NOT NULL,
-  [ReturnDate] datetime NOT NULL,
-  [IsReserved] bit NOT NULL
+  [ItemId] int NOT NULL
 )
 GO
 
@@ -40,8 +37,8 @@ GO
 CREATE TABLE [Accessory] (
   [id] int PRIMARY KEY IDENTITY(1, 1),
   [Name] nvarchar(255) NOT NULL,
-  [ItemId] int NOT NULL,
-  [Note] nvarchar(255)
+  [Details] nvarchar(255) NOT NULL,
+  [ItemId] int
 )
 GO
 

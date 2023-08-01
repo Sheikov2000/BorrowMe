@@ -33,7 +33,7 @@ namespace BorrowMe.Repositories
                             Id = DbUtils.GetInt(reader, "Id"),
                             ItemId = DbUtils.GetInt(reader, "ItemId"),
                             Name = DbUtils.GetString(reader, "Name"),
-                            Note = DbUtils.GetString(reader, "Note")
+                            Details = DbUtils.GetString(reader, "Details")
                         };
                     }
 
@@ -51,13 +51,13 @@ namespace BorrowMe.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO Accessory (ItemId, Name, Note)
+                        INSERT INTO Accessory (ItemId, Name, Details)
                         OUTPUT INSERTED.ID
-                                  VALUES (@ItemId, @Name, @Note);";
+                                  VALUES (@ItemId, @Name, @Details);";
 
                     DbUtils.AddParameter(cmd, "@ItemId", accessory.ItemId);
                     DbUtils.AddParameter(cmd, "@Name", accessory.Name);
-                    DbUtils.AddParameter(cmd, "@Note", accessory.Note);
+                    DbUtils.AddParameter(cmd, "@Details", accessory.Details);
 
                     accessory.Id = (int)cmd.ExecuteScalar();
                 }
@@ -74,12 +74,12 @@ namespace BorrowMe.Repositories
                 {
                     cmd.CommandText = @"UPDATE Accessory 
                                            SET Name = @Name,
-                                               Note = @Note,
+                                               Details = @Details,
                                                ItemId = @ItemId
                                          WHERE Id = @Id;";
 
                     DbUtils.AddParameter(cmd, "@Name", accessory.Name);
-                    DbUtils.AddParameter(cmd, "@Note", accessory.Note);
+                    DbUtils.AddParameter(cmd, "@Details", accessory.Details);
                     DbUtils.AddParameter(cmd, "@ItemId", accessory.ItemId);
                     DbUtils.AddParameter(cmd, "@Id", accessory.Id);
 
