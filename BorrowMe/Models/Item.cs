@@ -17,16 +17,12 @@ namespace BorrowMe.Models
         [MaxLength(250)]
         public string Description { get; set; }
         
-        [Required]
-        public int ItemTypeId { get; set; }
         public string ImageUrl { get; set; }
 
+        public List<Accessory> Accessories { get; set; }
 
-        
-    
-    
-    
-    
+        User User { get; set; } 
+
     }
 
 }

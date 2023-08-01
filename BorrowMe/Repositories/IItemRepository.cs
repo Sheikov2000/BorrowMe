@@ -10,9 +10,9 @@ namespace BorrowMe.Repositories
         //List<Item> GetAllItems();
         Item GetById(int id);
 
-        void AddItem(Item item);
-        void UpdateItem(Item item);
-        void DeleteItem(int id);
+        void Add(Item item);
+        void Update(Item item);
+        void Delete(int id);
 
     }
 }

@@ -16,7 +16,7 @@ namespace BorrowMe.Models
         [Required]
         public int ItemId { get; set; } 
 
-        public string Note { get; set; }
+        public string Details { get; set; }
 
     }
 }

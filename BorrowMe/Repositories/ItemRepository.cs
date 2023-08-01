@@ -21,12 +21,12 @@ namespace BorrowMe.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                            SELECT i.Id AS ItemId, i.UserId, i.Name, i.Description, i.ImageURL AS ItemImageLocation,
-                                   u.FirstName, u.LastName, u.Email, u.Phone, u.ZipCode, 
-                                   a.Id AS AccessoryId, a.Name AS AccessoryName, a.Note AS AccessoryNote
-                              FROM Item i
-                         LEFT JOIN User u ON u.Id = i.UserId
-                         LEFT JOIN Accessory a ON a.ItemId = i.Id
+                    SELECT i.Id AS ItemId, i.UserId, i.Name, i.Description, i.ImageURL AS ItemImageLocation,
+                        u.FirstName, u.LastName, u.Email, u.Phone, u.ZipCode, 
+                        a.Id AS AccessoryId, a.Name AS AccessoryName, a.Details AS AccessoryDetails
+                    FROM Item i
+                    LEFT JOIN User u ON u.Id = i.UserId
+                    LEFT JOIN Accessory a ON a.ItemId = i.Id
                              WHERE i.Id = @id";
                     DbUtils.AddParameter(cmd, "@id", id);
 
@@ -36,36 +36,23 @@ namespace BorrowMe.Repositories
 
                     while (reader.Read())
                     {
-                        var gearId = DbUtils.GetInt(reader, "GearId");
-
-                        if (item == null)
+                        item = new Item()
                         {
-                            item = ItemFromDb(reader);
-                            item.Accessory = new List<Accessory>();
-                        }
+                            Id = DbUtils.GetInt(reader, "ItemId"),
+                            Name = DbUtils.GetString(reader, "Name"),
+                            Description = DbUtils.GetString(reader, "Description"),
+                            UserId = DbUtils.GetInt(reader, "UserId"),
 
-                        if (DbUtils.IsNotDbNull(reader, "AccessoryId"))
-                        {
-                            item.Accessories.Add(new Accessory()
-                            {
-                                Id = DbUtils.GetInt(reader, "AccessoryId"),
-                                Name = DbUtils.GetString(reader, "AccessoryName"),
-                                Description = DbUtils.GetString(reader, "AccessoryDescription"),
-                                GearId = gear.Id
-                            });
-                        }
+
+                        };
                     }
-
-       
-
-                    reader.Close();
-                    return item;
+                return item;
+                reader.Close();
                 }
             }
         }
-
-
-        public void AddItem(Item item) 
+ 
+        public void Add(Item item)
         {
             using (var conn = Connection)
             {
@@ -73,13 +60,12 @@ namespace BorrowMe.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO Item (UserId, Description, Name, ItemTypeId, ImageUrl)
+                        INSERT INTO Item (UserId, Description, Name, ImageUrl)
                         OUTPUT INSERTED.ID
-                                  VALUES (@UserId, @Description, @Name, @ItemTypeId, @ImageUrl);";
+                                  VALUES (@UserId, @Description, @Name, @ImageUrl);";
                     DbUtils.AddParameter(cmd, "@UserId", item.UserId);
                     DbUtils.AddParameter(cmd, "@Description", item.Description);
                     DbUtils.AddParameter(cmd, "@Name", item.Name);
-                    DbUtils.AddParameter(cmd, "@ItemTypeId", item.ItemTypeId);
                     DbUtils.AddParameter(cmd, "@ImageUrl", item.ImageUrl);
                     DbUtils.AddParameter(cmd, "@Id", item.Id);
 
@@ -88,7 +74,7 @@ namespace BorrowMe.Repositories
             }
         }
 
-        public void UpdateItem(Item item)
+        public void Update(Item item)
         {
             using (var conn = Connection)
             {
@@ -99,15 +85,13 @@ namespace BorrowMe.Repositories
                     cmd.CommandText = @"UPDATE Item 
                                            SET UserId = @UserId,
                                                Name = @Name,
-                                               Description = @Description,
-                                               ItemTypeId = @ItemTypeId,
+                                               Description = @Description, 
                                                ImageUrl = @ImageUrl,                                             
                                          WHERE Id = @Id;";
 
                     DbUtils.AddParameter(cmd, "@UserId", item.UserId);
                     DbUtils.AddParameter(cmd, "@Description", item.Description);
                     DbUtils.AddParameter(cmd, "@Name", item.Name);
-                    DbUtils.AddParameter(cmd, "@ItemTypeId", item.ItemTypeId);
                     DbUtils.AddParameter(cmd, "@ImageUrl", item.ImageUrl);
                     DbUtils.AddParameter(cmd, "@Id", item.Id);
 
@@ -116,7 +100,7 @@ namespace BorrowMe.Repositories
             }
         }
 
-        public void DeleteItem(int id)
+        public void Delete(int id)
         {
             using (SqlConnection conn = Connection)
             {
