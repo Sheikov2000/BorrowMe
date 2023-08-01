@@ -19,7 +19,7 @@ namespace BorrowMe.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, ItemId, Name, Description
+                        SELECT Id, ItemId, Name, Details
                           FROM Accessory";
 
                     var reader = cmd.ExecuteReader();

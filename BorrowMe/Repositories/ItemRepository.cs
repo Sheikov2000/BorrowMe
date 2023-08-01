@@ -21,15 +21,20 @@ namespace BorrowMe.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    SELECT i.Id AS ItemId, i.UserId, i.Name, i.Description, i.ImageURL AS ItemImageLocation,
+                    SELECT i.Id AS ItemId, i.UserId, i.[Name], i.Description, i.ImageURL AS ItemImageLocation,
                         u.FirstName, u.LastName, u.Email, u.Phone, u.ZipCode, 
-                        a.Id AS AccessoryId, a.Name AS AccessoryName, a.Details AS AccessoryDetails
+                        
+                        u.FirstName, u.LastName, u.Email, u.Phone, u.Zipcode,
+
+                        a.Id AS AccessoryId, a.Name AS AccessoryName, a.Details, a.ItemId AS ItemId,
+
                     FROM Item i
-                    LEFT JOIN User u ON u.Id = i.UserId
+                    LEFT JOIN Item i ON i.UserId = u.Id
                     LEFT JOIN Accessory a ON a.ItemId = i.Id
+                   
                              WHERE i.Id = @id";
                     DbUtils.AddParameter(cmd, "@id", id);
-
+                   
                     var reader = cmd.ExecuteReader();
 
                     Item item = null;
