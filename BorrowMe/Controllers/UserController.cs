@@ -64,11 +64,7 @@ namespace BorrowMe.Controllers
                 nameof(GetByFirebaseUserId), new { firebaseId = user.FirebaseId }, user);
         }
 
-        private User GetCurrentUserProfile()
-        {
-            var firebaseId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return _userRepository.GetByFirebaseUserId(firebaseId);
-        }
+   
 
         [HttpPut("{id}")]
         public IActionResult Edit(int id, User user)
@@ -76,7 +72,24 @@ namespace BorrowMe.Controllers
             _userRepository.UpdateUser(user);
             return NoContent();
 
+        
         }
 
+        [HttpGet("Me")]
+        public IActionResult Me()
+        {
+            var user = GetCurrentUserProfile();
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+        private User GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userRepository.GetByFirebaseUserId(firebaseUserId);
+        }
     }
 }
