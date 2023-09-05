@@ -1,0 +1,32 @@
+.itemCardContainer{
+background-color: #EFEFEF;
+display: flex;
+flex-direction: column;
+align-items: center;
+border-radius: 5%;
+overflow: hidden;
+
+}
+
+.image{
+    height: 40%;
+    width: 90%;
+    margin-top: 5%;
+
+}
+
+.title{
+    font-family: "Cherry Bomb One";
+    font-size: 1.4em;
+    margin: 3% 0;
+}
+
+.description{
+    font-family: "Montserrat";
+    height: 30%;
+    width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: break-spaces;
+    text-align: center;
+}

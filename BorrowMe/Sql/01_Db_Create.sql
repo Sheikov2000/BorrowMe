@@ -1,3 +1,22 @@
+USE [master]
+GO
+
+IF db_id('BorrowMe') IS NOT NULL
+BEGIN
+  ALTER DATABASE [BorrowMe] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+  DROP DATABASE [BorrowMe]
+END
+GO
+
+CREATE DATABASE [BorrowMe]
+GO
+
+USE [BorrowMe]
+GO
+
+-----------------------------------------------------------------------------------
+----------------------------------TABLE CREATION-----------------------------------
+
 CREATE TABLE [User] (
   [Id] int PRIMARY KEY IDENTITY(1, 1),
   [FirebaseId] nvarchar(255) NOT NULL,
@@ -27,18 +46,17 @@ GO
 
 CREATE TABLE [Item] (
   [Id] int PRIMARY KEY IDENTITY(1, 1),
-  [UserId] int,
-  [Name] nvarchar(255) NOT NULL,
+  [UserId] int NOT NULL,
+  [Title] nvarchar(255) NOT NULL,
   [Description] nvarchar(255) NOT NULL,
-  [ImageUrl] nvarchar(255)
+  [ImageUrl] nvarchar(255),
+  [CategoryId] int NOT NULL
 )
 GO
 
-CREATE TABLE [Accessory] (
+CREATE TABLE [Category] (
   [id] int PRIMARY KEY IDENTITY(1, 1),
-  [Name] nvarchar(255) NOT NULL,
-  [Details] nvarchar(255) NOT NULL,
-  [ItemId] int
+  [Name] nvarchar(255) NOT NULL
 )
 GO
 
@@ -57,5 +75,5 @@ GO
 ALTER TABLE [Borrowing] ADD FOREIGN KEY ([BorrowerId]) REFERENCES [User] ([Id])
 GO
 
-ALTER TABLE [Accessory] ADD FOREIGN KEY ([ItemId]) REFERENCES [Item] ([Id])
+ALTER TABLE [Item] ADD FOREIGN KEY ([CategoryId]) REFERENCES [Category] ([id])
 GO

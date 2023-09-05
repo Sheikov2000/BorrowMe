@@ -29,7 +29,7 @@ namespace BorrowMe
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddTransient<IMessagesRepository, MessagesRepository>();
-            //services.AddTransient<IItemRepository, ItemRepository>();
+            services.AddTransient<IItemRepository, ItemRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             //services.AddTransient<IBorrowingRepository, BorrowingRepository>();
             //services.AddTransient<IItemTypeRepository, ItemTypeRepository>();

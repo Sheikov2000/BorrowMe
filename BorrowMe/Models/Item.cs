@@ -7,11 +7,14 @@ namespace BorrowMe.Models
     public class Item
     {
         public int Id { get; set; }
+
         public int UserId { get; set; }
+
+        public User User { get; set; }
 
         [Required]
         [MaxLength(20)]
-        public string Name { get; set; }
+        public string Title { get; set; }
 
         [Required]
         [MaxLength(250)]
@@ -19,9 +22,10 @@ namespace BorrowMe.Models
         
         public string ImageUrl { get; set; }
 
-        public List<Accessory> Accessories { get; set; }
+        public int CategoryId { get; set; }
 
-        User User { get; set; } 
+        public Category Category { get; set; }
+
 
     }
 
