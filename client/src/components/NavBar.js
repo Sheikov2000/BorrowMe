@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -28,9 +29,15 @@ const NavBar = ({ args }) => {
             Borrow Me!
           </p>
         </NavbarBrand>
+        <Link to="/AllItems">
         <NavbarText>All Items</NavbarText>
+        </Link>
+        <Link to="/MyItems">
         <NavbarText>My Items</NavbarText>
+        </Link>
+        <Link to="/">
         <NavbarText>My Messages</NavbarText>
+        </Link>
         <NavbarToggler onClick={toggle}></NavbarToggler>
         <Collapse isOpen={isOpen} navbar>
           <Nav navbar>
