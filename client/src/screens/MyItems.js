@@ -13,7 +13,7 @@ export const MyItems = () => {
   const navigate = useNavigate()
 
   const navigateToCreate = () => {
-    navigate("/Add")
+    navigate("Add")
   }
 
   useLayoutEffect(() => {
