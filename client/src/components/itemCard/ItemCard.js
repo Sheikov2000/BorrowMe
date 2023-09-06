@@ -13,16 +13,13 @@ const ItemCard = ({ title, body, imageSource, onClick }) => {
     >
       <img
         alt="Card cap"
-        src="https://picsum.photos/318/180"
+        src={imageSource}
         width="90%"
         style={{ marginTop: "5%" }}
       />
       <CardBody>
-        <CardTitle style={{ fontFamily: "Cherry Bomb One" }}>Test</CardTitle>
-        <CardText>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </CardText>
+        <CardTitle style={{ fontFamily: "Cherry Bomb One" }}>{title}</CardTitle>
+        <CardText>{body}</CardText>
       </CardBody>
     </Card>
   );

@@ -6,14 +6,26 @@ import ItemCard from "./components/itemCard/ItemCard";
 import { BrowserRouter } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import { ApplicationViews } from "./views/ApplicationViews";
+import { createContext } from "react";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+
+export let userContext = null;
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
 
+useEffect(() => {
+  userContext = createContext(userProfile);
+}, [userProfile]);
+  
   useEffect(() => {
     onLoginStatusChange(setIsLoggedIn);
   }, []);
+
+
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -31,7 +43,9 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <ApplicationViews isLoggedIn={isLoggedIn}/>
+      <userContext.Provider value={userProfile}>
+        <ApplicationViews isLoggedIn={isLoggedIn} />
+      </userContext.Provider>
       </BrowserRouter>
     </div>
   );
