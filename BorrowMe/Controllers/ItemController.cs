@@ -65,7 +65,7 @@ namespace BorrowMe.Controllers
             return CreatedAtAction("GetItemById", new { id = item.Id }, item);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteItem(int id)
         {
             _itemRepository.DeleteItem(id);
@@ -74,10 +74,10 @@ namespace BorrowMe.Controllers
     }
 }
 
+    
 
 
 
-
-
+    
 
 

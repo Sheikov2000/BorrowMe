@@ -31,6 +31,7 @@ namespace BorrowMe
             //services.AddTransient<IMessagesRepository, MessagesRepository>();
             services.AddTransient<IItemRepository, ItemRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
             //services.AddTransient<IBorrowingRepository, BorrowingRepository>();
             //services.AddTransient<IItemTypeRepository, ItemTypeRepository>();
 
