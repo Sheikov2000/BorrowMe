@@ -28,12 +28,11 @@ namespace BorrowMe
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddTransient<IMessagesRepository, MessagesRepository>();
             services.AddTransient<IItemRepository, ItemRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
+            //services.AddTransient<IMessagesRepository, MessagesRepository>();
             //services.AddTransient<IBorrowingRepository, BorrowingRepository>();
-            //services.AddTransient<IItemTypeRepository, ItemTypeRepository>();
 
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
             var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";

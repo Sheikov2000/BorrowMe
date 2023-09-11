@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useContext, useLayoutEffect } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
-import { userContext } from "../App";
 import NavBar from "../components/NavBar";
-import { addItem } from "../modules/itemMenager";
+import { userContext } from "../App";
+import { addItem } from "../modules/itemMenager"; 
 import { getAllCategories } from "../modules/categoryManager";
+import { useNavigate } from "react-router-dom";
 
 //UserId - auto populate on item with context
 //Title - text field
@@ -11,31 +12,34 @@ import { getAllCategories } from "../modules/categoryManager";
 //ImageUrl - text field
 //CategoryId - select
 
-
 export const CreateItem = () => {
-  const user = useContext(userContext)
-  const [categories, SetCategories] = useState([])
+  const user = useContext(userContext);
+  const [categories, setCategories] = useState([]);
   const [newItem, setNewItem] = useState({
     title: "",
     description: "",
     imageUrl: "",
-    categoryId: "",
+    categoryId: 1,
     userId: 0,
   });
+  const navigate = useNavigate();
 
   useLayoutEffect(() => {
-    getAllCategories().then(SetCategories)
-  }
+    getAllCategories().then(setCategories);
+  }, []);
 
-  )
+  useEffect(() => {
+    if (user != null) {
+      const copy = { ...newItem };
+      copy.userId = user.id;
+      setNewItem(copy);
+    }
+  }, [user]);
 
-const submitItem = () => {
-  const copy = { ...newItem };
-   copy.userId = user.id;
-   setNewItem(copy);
-   addItem(newItem);
-}
-
+  const submitItem = () => {
+    addItem(newItem);
+    navigate("/MyItems");
+  };
 
   return (
     <>
@@ -85,7 +89,7 @@ const submitItem = () => {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="categoryL">Image URL</Label>
+            <Label for="category">Category</Label>
             <Input
               id="category"
               name="category"
@@ -103,6 +107,7 @@ const submitItem = () => {
               ))}
             </Input>
           </FormGroup>
+
           <Button onClick={submitItem}>Submit</Button>
         </Form>
       </div>
