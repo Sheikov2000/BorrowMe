@@ -82,7 +82,7 @@ export const addItem = (item) => {
   });
 };
 
-export const EditItem = (item) => {
+export const editItem = (item) => {
   return getToken().then((token) => {
     return fetch(apiUrl, {
       method: "PUT",
@@ -105,8 +105,8 @@ export const EditItem = (item) => {
   });
 };
 
-export const DeleteItem = (id) => {
-  return fetch(`${apiUrl}/${id}`, {
+export const deleteItem = (id) => {
+  return fetch(apiUrl, {
     method: "DELETE",
   });
 };

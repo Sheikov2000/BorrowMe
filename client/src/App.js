@@ -36,7 +36,7 @@ useEffect(() => {
   }, [isLoggedIn]);
 
   if (isLoggedIn === null) {
-    // Until we know whether or not the user is logged in or not, just show a spinner
+    // Until we know whether is logged in or not, just show a spinner
     return <Spinner className="app-spinner dark" />;
   }
 
